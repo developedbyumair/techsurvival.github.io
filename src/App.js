@@ -1,56 +1,82 @@
-import './App.css';
-import React, { useEffect,useState } from 'react'
-import NavBar from './components/NavBar';
-import News from './components/News';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import LoadingBar from 'react-top-loading-bar'
-import WeatherCard from './components/WeatherCard';
+import "./App.css";
+import React, { useEffect, useState } from "react";
+import NavBar from "./components/NavBar";
+import News from "./components/News";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
+import WeatherCard from "./components/WeatherCard";
 import getFormattedWeatherData from "./services/weatherService";
-import StockMarketCard from './components/StockMarketCard';
+import StockMarketCard from "./components/StockMarketCard";
 
 function App() {
-  document.body.style = 'background: #EEECFC;';
+  document.body.style = "background: #EEECFC;";
   const pageSize = 12;
   const [progress, setProgress] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('*');
-  const [weather, setWeather] = useState({ details:'Trying to Fetch Latest Weather Update', icon:'L', temp:273, temp_min:273, temp_max:273, sunrise:0, sunset:0, speed:0, humidity:0, feels_like:273, timezone:1000, dt:1669793656, name:'- ', country:'-' });
+  const [searchQuery, setSearchQuery] = useState("*");
+  const [weather, setWeather] = useState({
+    details: "Trying to Fetch Latest Weather Update",
+    icon: "L",
+    temp: 273,
+    temp_min: 273,
+    temp_max: 273,
+    sunrise: 0,
+    sunset: 0,
+    speed: 0,
+    humidity: 0,
+    feels_like: 273,
+    timezone: 1000,
+    dt: 1669793656,
+    name: "- ",
+    country: "-",
+  });
 
   useEffect(() => {
-
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        // setWeather({details:'Featching Latest Weather Update', icon:'L'});
-        fetchWeather(lat,lon);
-      }, function errorHandler(err) {
-        // eslint-disable-next-line
-        if(err.code == 1) {
-           alert("Weather update not available : Access to geolocation is denied!");
-           setWeather({details:'Weather update not available : Access to geolocation is denied!', icon:'E'});
-           // eslint-disable-next-line
-        } else if( err.code == 2) {
-           alert("Weather update not available : Position is unavailable!");
-           setWeather({details:'Weather update not available : Access to geolocation is denied!', icon:'E'});
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          // setWeather({details:'Featching Latest Weather Update', icon:'L'});
+          fetchWeather(lat, lon);
+        },
+        function errorHandler(err) {
+          // eslint-disable-next-line
+          if (err.code == 1) {
+            alert(
+              "Weather update not available : Access to geolocation is denied!"
+            );
+            setWeather({
+              details:
+                "Weather update not available : Access to geolocation is denied!",
+              icon: "E",
+            });
+            // eslint-disable-next-line
+          } else if (err.code == 2) {
+            alert("Weather update not available : Position is unavailable!");
+            setWeather({
+              details:
+                "Weather update not available : Access to geolocation is denied!",
+              icon: "E",
+            });
+          }
         }
-     });
+      );
     }
 
-    const fetchWeather = async (lat,lon) => {
-      await getFormattedWeatherData({lat,lon}).then((data) => {
+    const fetchWeather = async (lat, lon) => {
+      await getFormattedWeatherData({ lat, lon }).then((data) => {
         console.log(
           `App.js - Successfully fetched weather for ${data.name}, ${data.country}.`
         );
         setWeather(data);
       });
     };
-
   }, []);
-  
 
   return (
     <div className="App">
-      <Router>
+      Heelo world
+      {/* <Router>
       <NavBar setSearchQuery={setSearchQuery}/>
       <LoadingBar
         height={3}
@@ -73,7 +99,7 @@ function App() {
           <Route  path="/search" element={<News setProgress={setProgress} key="search" pageSize={pageSize} country="IN" language="en" query={searchQuery} category="Search Results"/>} />
 
         </Routes>
-      </Router>
+      </Router> */}
     </div>
   );
 }
