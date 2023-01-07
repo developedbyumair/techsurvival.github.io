@@ -1,38 +1,51 @@
-import React, { useRef }  from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from './newsylandLogo.gif';
+import logo from "./newsylandLogo.gif";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = (props) => {
-
   const navigate = useNavigate();
   const textInput = useRef(null);
-  
+
   const searchNews = (event) => {
     event.preventDefault();
-    let searchQueryValue = (textInput.current.value === "" || textInput.current.value === " " || textInput.current.value === null || textInput.current.value === undefined) ?  "*" : textInput.current.value;
+    let searchQueryValue =
+      textInput.current.value === "" ||
+      textInput.current.value === " " ||
+      textInput.current.value === null ||
+      textInput.current.value === undefined
+        ? "*"
+        : textInput.current.value;
     props.setSearchQuery(searchQueryValue);
     navigate("/search");
     toggleCollapseButton();
   };
 
   const onSearchBarChange = () => {
-    if(textInput.current.value === "")
-    props.setSearchQuery("*");
+    if (textInput.current.value === "") props.setSearchQuery("*");
   };
 
   const toggleCollapseButton = () => {
-      var menuToggle = document.getElementById('navbarSupportedContent');
-      menuToggle.className = "collapse navbar-collapse";
+    var menuToggle = document.getElementById("navbarSupportedContent");
+    menuToggle.className = "collapse navbar-collapse";
   };
 
   return (
     <div>
-      <nav className="navbar fixed-top navbar-expand-lg navbar-dark" style={{ backgroundColor : '#4A06A2' }}>
+      <nav
+        className="navbar fixed-top navbar-expand-lg navbar-dark"
+        style={{ backgroundColor: "#4A06A2" }}
+      >
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-          <img src={logo} alt="Logo" width="45" height="30" className="me-2 align-text-center"/>
-            NewsyLand
+            <img
+              src={logo}
+              alt="Logo"
+              width="45"
+              height="30"
+              className="me-2 align-text-center"
+            />
+            Tech Survival
           </Link>
           <button
             className="navbar-toggler"
@@ -56,7 +69,11 @@ const NavBar = (props) => {
                 ref={textInput}
                 onChange={onSearchBarChange}
               />
-              <button className="btn btn-outline-primary" type="submit" onClick={searchNews}>
+              <button
+                className="btn btn-outline-primary"
+                type="submit"
+                onClick={searchNews}
+              >
                 Find
               </button>
             </form>
